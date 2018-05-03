@@ -1,0 +1,152 @@
+<div class="content col-md-12">
+    <div id="massage" class="alert alert-success alert-dismissible" ng-show="message">
+        <a href="#" class="close" ng-click="messageClose()" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> {{message}}
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalSave">Add Student</button>
+    <br>
+    <div>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th ng-click="sortData('$index')">
+                    Index <div ng-class="getSortClass('$index')"></div>
+                </th>
+                <th ng-click="sortData('studentName')">
+                    Student Name <div ng-class="getSortClass('studentName')"></div>
+                </th>
+                <th ng-click="sortData('roll')">
+                    Roll <div ng-class="getSortClass('roll')"></div>
+                </th>
+                <th colspan="2">Action</th>  
+            </tr>
+            <tr ng-repeat="student in students | orderBy:sortColumn:reverseSort">
+                <td>{{$index + 1}}</td>
+                <td>{{student.studentName}}</td>
+                <td>{{student.roll}}</td>
+                <td><button  data-toggle="modal" data-target="#myModalEdit" type="button" ng-click="selectedStudent(student)" class="btn btn-primary">Edit</button></td>
+                <td><button data-toggle="modal" data-target="#myModalDelete" type="button" class="btn btn-danger"  ng-click="selectedStudent(student)">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Modal Save -->
+    <div class="modal fade" id="myModalSave" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Save Student</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal alert alert-warning" name="studentList" id="studentForm" ng-submit="saveStudent();">
+                        <h3 class="text-center">Add Student</h3>
+                        <div class="form-group">
+                            <label for="s_name">Student Name:</label>
+                            <input type="text" id="s_name" name="student_name" class="form-control" placeholder="Enter Student Name" ng-model="studentInfo.studentName" value="" autofocus required />
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger" ng-show="studentList.student_name.$invalid && studentList.student_name.$dirty">Name field is Empty!</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <select name="student_class" class="form-control" id="class"  ng-model="studentInfo.studentClass" ng-options="cls.name for cls in classes" ng-change="getRoll();" autofocus required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger" ng-show="studentList.student_class.$invalid && studentList.student_class.$dirty">Please Selected Class</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="roll">Roll:</label>
+                            <input id="roll" type="text" name="student_roll" class="form-control" placeholder="Enter Student Roll" ng-model="studentInfo.roll" autofocus required />		
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger" ng-show="studentList.student_address.$invalid && studentList.student_address.$dirty">Address field is Empty!</p>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-warning" ng-disabled="studentList.$invalid">Save Student</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <!-- Edit Student -->
+                    <div class="modal fade" id="myModalEdit" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit Student</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal alert alert-warning" name="editFrom" id="studentForm" ng-submit="updateStudent();">
+                        <h3 class="text-center">Add Student</h3>
+                        <div class="form-group">
+                            <label for="s_name">Student Name:</label>
+                            <input type="text" id="s_name" name="student_name" class="form-control" placeholder="Enter Student Name" ng-model="clickedStudent.studentName" value="" autofocus required />
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger" ng-show="editFrom.student_name.$invalid && editFrom.student_name.$dirty">Name field is Empty!</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <select class="form-control" id="class"  ng-model="clickedStudent.studentClass" ng-options="cls.name for cls in classes" ng-selected="true">
+                                
+                            </select>
+                        </div> 
+                        {{clickedStudent.studentClass.classId}}
+                        <div class="form-group">
+                            <label for="roll">Roll:</label>
+                            <input id="roll" type="text" name="student_roll" class="form-control" placeholder="Enter Student Roll" ng-model="clickedStudent.roll" autofocus required />		
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger" ng-show="editFrom.student_address.$invalid && editFrom.student_address.$dirty">Address field is Empty!</p>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-warning" ng-disabled="editFrom.$invalid">Save Student</button>
+                        </div>
+                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+    
+    
+    <!-- Delete Student -->
+                    <div class="modal fade" id="myModalDelete" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit Student</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Do you want to delete {{clickedStudent.studentName}} 
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit"  data-dismiss="modal" class="btn btn-success" ng-click="deleteStudent()">Ok</button>
+                                    <button type="submit"  data-dismiss="modal" class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+</div>
