@@ -43,9 +43,9 @@ public class StudentController {
         System.out.println("Called...");
 
         List<Month> months = service.getAllMonth();
-        months.forEach((m) -> {
-            System.out.println("month: " + m.toString());
-        });
+//        months.forEach((m) -> {
+//            System.out.println("month: " + m.toString());
+//        });
 
         return months;
     }

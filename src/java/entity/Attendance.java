@@ -84,7 +84,7 @@ public class Attendance  implements java.io.Serializable {
 
     
     @Column(name="attendance_status", nullable=false)
-    public boolean isAttendanceStatus() {
+    public boolean getAttendanceStatus() {
         return this.attendanceStatus;
     }
     

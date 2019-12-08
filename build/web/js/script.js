@@ -8,6 +8,10 @@ var app = angular.module("studentModule", ["ngRoute"])
                     .when("/attendance", {
                         templateUrl: "attendance.html",
                         controller: "attendanceController"
+                    })
+                    .when("/studentAttendanceDetails", {
+                        templateUrl: "studentAttendanceDetails.html",
+                        controller: "attendanceController"
                     });
         });
 

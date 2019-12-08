@@ -29,16 +29,24 @@ app.controller("studentController", function ($scope, $http) {
     $scope.sortData = function (colum) {
         $scope.reverseSort = ($scope.sortColumn == colum) ? !$scope.reverseSort : false;
         $scope.sortColumn = colum;
-    }
+    };
 
     $scope.getSortClass = function (colum) {
         if ($scope.sortColumn == colum) {
             return $scope.reverseSort ? 'arrow-down' : 'arrow-up';
         }
         return '';
-    }
+    };
 
+    $scope.className = function (classId) {
+        for (var i = 0; i < $scope.classes.length; i++) {
+            if ($scope.classes[i].classId == classId) {
+                return $scope.classes[i].name;
+            }
 
+        }
+
+    };
 
     $scope.saveStudent = function () {
         console.log("save student called...");
@@ -146,7 +154,7 @@ app.controller("studentController", function ($scope, $http) {
         $scope.message = "Success! " + response.data;
         getStudents();
         clearFormData();
-       $("#myMessage").show(1000);
+        $("#myMessage").show(1000);
         $("#myMessage").removeClass("alert-danger");
         $("#myMessage").addClass("alert-danger");
         setTimeout(clearMassage, 2500);
@@ -161,7 +169,7 @@ app.controller("studentController", function ($scope, $http) {
         setTimeout(clearMassage, 2500);
     }
 
-  function clearMassage() {
+    function clearMassage() {
         $("#myMessage").hide(1000);
         $scope.message = "";
     }

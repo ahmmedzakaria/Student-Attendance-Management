@@ -75,4 +75,33 @@ public class ListDao {
             return null;
         }
     }
+      
+      public List<AttendanceReport> getAttendanceReportList(int classId, int monthId) {
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<AttendanceReport> attendanceRerport = session.createQuery("SELECT s FROM AttendanceReport s where s.studentClass.classId='"+classId+"' and s.month.monthId='"+monthId+"'").list();
+            session.getTransaction().commit();
+            session.close();
+            return attendanceRerport;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }   
+    }
+      public List<Attendance> getAttendanceForStudent(int studentId, int monthId) {
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<Attendance> attendanceRerport = session.createQuery("SELECT s FROM Attendance s where s.student.studentId='"+studentId+"' and s.month.monthId='"+monthId+"'").list();
+            session.getTransaction().commit();
+            session.close();
+            return attendanceRerport;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }   
+    }
 }

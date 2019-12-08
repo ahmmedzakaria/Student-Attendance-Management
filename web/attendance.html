@@ -1,38 +1,50 @@
 
 <div class="container-fluid" ng-controller="attendanceController">
     <div class="row">
-        <div class="content col-md-3">
-            {{test}} Teacher
 
-        </div> 
-        <div class="content col-md-3">
+        <div class="content col-md-3 col-md-offset-3">
             <div class="form-group">
                 <label for="class">Class</label>
-                <select class="form-control" id="class"  ng-model="cls" ng-options="cls.name for cls in classes" ng-change="selectedClassChanged()">
+                <select class="form-control" id="class"  ng-model="cls" ng-options="cls.name for cls in classes" ng-change="classChanged()">
                 </select>
             </div> 
         </div>
-        <div class="content col-md-3">
+        <div class="content col-md-3" style="padding: 28px;">
             <label for="month">Month</label>
-            <select  class="form-control" id="month" ng-change="myFunc()"  ng-model="studentInfo.studentClass" ng-options="month.monthName for month in months">
+            <select  class="form-control" id="month" ng-model="month"  ng-options="month.monthName for month in months"  ng-change="monthChanged()">
             </select>
 
         </div>
-        <div class="content col-md-3">
-            Year
 
-        </div>
     </div>  
 
     <div class="content col-md-12">
         <div id="myMessage" class="alert  alert-dismissible" ng-show="message">
             <a href="#" class="close" ng-click="messageClose()" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{message}}
+            {{message}}
         </div>
 
         <br>
-        Total Student: {{totalStudent}}
-        <button type="button" class="btn btn-primary pull-right" ng-click="saveAttendances();">Save Attendance</button>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="content col-md-4" style="padding:27px;">
+                    Total Student: {{totalStudent}}
+                </div>
+                <div class="content col-md-4" style="padding:27px;">
+                    Total Class: {{totalClass}}
+                </div>
+                <div class="content col-md-2">
+                    <button type="button" class="btn btn-primary pull-right" ng-click="updateAttendances();">Update Attendance</button>
+                </div>
+                <div class="content col-md-2">
+                    <button type="button" class="btn btn-primary pull-right" ng-click="saveAttendances();">Save Attendance</button>
+                </div>
+            </div>
+        </div>
+         
+        
+        
         <br>
         <table class="table table-striped table-bordered">
             <tr>
@@ -40,18 +52,22 @@
                 <th>Student Name</th>
                 <th>Roll</th>  
                 <th>Attendance</th> 
+                <th>Total Presents</th> 
+                <th>Total Absents</th> 
             </tr>
             <tr ng-repeat="student in attendances">
                 <td>{{$index + 1}}</td>
-                <td>{{student.studentName}}</td>
-                <td>{{student.roll}}</td>
+                <td><a href="#studentAttendanceDetails"  ng-click="$event.viewAttendanceDetails(student)">{{student.student.studentName}}</a></td>
+                <td>{{student.roll}} </td>
                 <td><input type='checkbox' value="lasd" class="checkbox-inline" ng-model='student.attendanceStatus' placeholder='Field:'> {{attendanceStatus(student.attendanceStatus)}}</td>
-                
+                <td>{{student.ttlPresents}}</td>
+                <td>{{student.ttlAbsents}}</td>
+
             </tr>
         </table>
-        
-        
-        
-  
+
+
+
+
     </div>
 </div>

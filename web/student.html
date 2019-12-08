@@ -1,10 +1,10 @@
 <div class="content col-md-12">
     <div id="massage" class="alert alert-success alert-dismissible" ng-show="message">
         <a href="#" class="close" ng-click="messageClose()" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Success!</strong> {{message}}
+        {{message}}
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalSave">Add Student</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#myModalSave">Add Student</button>
     <br>
     <div>
         <table class="table table-striped table-bordered">
@@ -15,6 +15,9 @@
                 <th ng-click="sortData('studentName')">
                     Student Name <div ng-class="getSortClass('studentName')"></div>
                 </th>
+                <th ng-click="sortData('className')">
+                    Class <div ng-class="getSortClass('className')"></div>
+                </th>
                 <th ng-click="sortData('roll')">
                     Roll <div ng-class="getSortClass('roll')"></div>
                 </th>
@@ -23,9 +26,10 @@
             <tr ng-repeat="student in students | orderBy:sortColumn:reverseSort">
                 <td>{{$index + 1}}</td>
                 <td>{{student.studentName}}</td>
+                <td>{{className(student.studentClass.classId)}}</td>
                 <td>{{student.roll}}</td>
-                <td><button  data-toggle="modal" data-target="#myModalEdit" type="button" ng-click="selectedStudent(student)" class="btn btn-primary">Edit</button></td>
-                <td><button data-toggle="modal" data-target="#myModalDelete" type="button" class="btn btn-danger"  ng-click="selectedStudent(student)">Delete</button></td>
+                <td><button  data-toggle="modal" data-target="#myModalEdit" data-dismiss="modal" type="button" ng-click="selectedStudent(student)" class="btn btn-primary">Edit</button></td>
+                <td><button data-toggle="modal" data-target="#myModalDelete" data-dismiss="modal" type="button" class="btn btn-danger"  ng-click="selectedStudent(student)">Delete</button></td>
             </tr>
         </table>
     </div>
@@ -116,7 +120,7 @@
                             <p class="text-danger" ng-show="editFrom.student_address.$invalid && editFrom.student_address.$dirty">Address field is Empty!</p>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-warning" ng-disabled="editFrom.$invalid">Save Student</button>
+                            <button class="btn btn-warning" ng-disabled="editFrom.$invalid">Save Changes</button>
                         </div>
                     </form>
                                 </div>
